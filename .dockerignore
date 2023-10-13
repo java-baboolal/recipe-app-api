@@ -1,7 +1,7 @@
 #Git
 .git
 .gitignore
-
+.idea
 #Docker
 .docker
 

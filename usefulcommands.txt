@@ -5,3 +5,23 @@ docker-compose run --rm app sh -c "flake8"
 docker-compose run --rm app sh -c "django-admin startproject app ."
 
 docker-compose up
+
+docker-compose run --rm app sh -c "python manage.py test"
+
+docker-compose run --rm app sh -c "python manage.py startapp core"
+
+docker-compose run --rm app sh -c "python manage.py wait_for_db && flake8"
+
+
+#when migrate doesn't work and database reset is required
+ docker volume ls
+ docker volume rm recipe-app-api-part-2_dev-db-data
+ docker-compose down # if container in use
+ docker volume rm recipe-app-api-part-2_dev-db-data
+
+docker-compose run --rm app sh -c "python manage.py test"
+docker-compose run --rm app sh -c "python manage.py makemigrations"
+docker-compose run --rm app sh -c "python manage.py wait_for_db && python manage.py migrate"
+docker-compose run --rm app sh -c "python manage.py createsuperuser"
+
+
